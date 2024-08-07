@@ -17,7 +17,7 @@
         <div class="container-wrapper">
             <div class="box-form">
                 <img src="./thiep/anh/thamdu-05.png" alt="" class="img-form">
-                <form action="" name="thang-nhung">
+                <form action="" name="hien-quynh">
                     <div class="feed-info">
                         <label for="" class="in-fe">DÀNH CHÚT THỜI GIAN ĐỂ XÁC NHẬN THAM DỰ GIÚP <strong>HIỀN & QUỲNH</strong> NHÉ!</label>
                     </div>
@@ -87,60 +87,88 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzqb0Yl894o6TnTuiGQtfvxnNopOpZiOSL7cMgXQgDTU_hHB5U-t38EPxyLGMB2BEvs/exec';
-        const form = document.forms['thang-nhung'];
-        const yesRadio = document.getElementById('yes');
-        const noRadio = document.getElementById('no');
-        const allergyOption = document.getElementById('allergy-option');
-        const giftOption = document.getElementById('gift-option');
-        const contactInfo = document.getElementById('contact-info');
-        const guestCount = document.getElementById('guest-count');
+       const scriptURL = 'https://script.google.com/macros/s/AKfycbzXEpQTjg4cCyVk9dP5HNnocVun8VQqTQTeN_rQ7PRmLQ6D9WuuOBY85RLs4uV7t9Q/exec';
+const form = document.forms['hien-quynh'];
+const yesRadio = document.getElementById('yes');
+const noRadio = document.getElementById('no');
+const allergyOption = document.getElementById('allergy-option');
+const giftOption = document.getElementById('gift-option');
+const contactInfo = document.getElementById('contact-info');
+const guestCount = document.getElementById('guest-count');
+const contactInput = contactInfo.querySelector('input');
+const guestSelect = guestCount.querySelector('select');
 
-        yesRadio.addEventListener('change', () => {
-            if (yesRadio.checked) {
-                allergyOption.classList.remove('hidden');
-                giftOption.classList.add('hidden');
-                contactInfo.classList.remove('hidden');
-                guestCount.classList.remove('hidden');
-            }
-        });
+yesRadio.addEventListener('change', () => {
+    if (yesRadio.checked) {
+        allergyOption.classList.remove('hidden');
+        giftOption.classList.add('hidden');
+        contactInfo.classList.remove('hidden');
+        guestCount.classList.remove('hidden');
+        // Đặt thuộc tính required cho các trường khi chọn CÓ
+        contactInput.setAttribute('required', 'true');
+        guestSelect.setAttribute('required', 'true');
+    }
+});
 
-        noRadio.addEventListener('change', () => {
-            if (noRadio.checked) {
-                giftOption.classList.remove('hidden');
-                allergyOption.classList.add('hidden');
-                contactInfo.classList.add('hidden');
-                guestCount.classList.add('hidden');
-            }
-        });
+noRadio.addEventListener('change', () => {
+    if (noRadio.checked) {
+        giftOption.classList.remove('hidden');
+        allergyOption.classList.add('hidden');
+        contactInfo.classList.add('hidden');
+        guestCount.classList.add('hidden');
+        // Xóa thuộc tính required khi chọn KHÔNG
+        contactInput.removeAttribute('required');
+        guestSelect.removeAttribute('required');
+    }
+});
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            alert('CẢM ƠN BẠN ĐÃ PHẢN HỒI! Dữ liệu gửi về sẽ mất khoảng một vài giây, nhấn "OK" và đợi trang tự tải lại nhé <3'); // Hiển thị thông báo ngay lập tức khi nhấn submit
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    
+    // Kiểm tra sự tồn tại của tất cả các trường bắt buộc
+    const requiredFields = form.querySelectorAll('[required]');
+    let valid = true;
+    
+    requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+            valid = false;
+            field.classList.add('error'); // Thêm lớp CSS để hiển thị lỗi (nếu có)
+        } else {
+            field.classList.remove('error');
+        }
+    });
+    
+    if (!valid) {
+        alert('Vui lòng điền đầy đủ thông tin bắt buộc.');
+        return;
+    }
 
-            // Gửi dữ liệu form đi
-            fetch(scriptURL, { 
-                method: 'POST', 
-                body: new FormData(form)
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Nếu dữ liệu được gửi thành công, tải lại trang
-                    setTimeout(() => {
-                        window.location.reload(); // Tải lại trang sau 0.5 giây
-                    }, 100); // 0.5 giây
-                } else {
-                    // Nếu gặp lỗi khi gửi dữ liệu
-                    console.error('Error!', response);
-                    alert('OPPS! Đã xảy ra lỗi');
-                }
-            })
-            .catch(error => {
-                // Xử lý lỗi nếu có
-                console.error('Error!', error.message);
-                alert('OPPS! Đã xảy ra lỗi: ' + error.message);
-            });
-        });
+    alert('CẢM ƠN BẠN ĐÃ PHẢN HỒI! Dữ liệu gửi về sẽ mất khoảng một vài giây, nhấn "OK" và đợi trang tự tải lại nhé <3'); // Hiển thị thông báo ngay lập tức khi nhấn submit
+
+    // Gửi dữ liệu form đi
+    fetch(scriptURL, { 
+        method: 'POST', 
+        body: new FormData(form)
+    })
+    .then(response => {
+        if (response.ok) {
+            // Nếu dữ liệu được gửi thành công, tải lại trang
+            setTimeout(() => {
+                window.location.reload(); // Tải lại trang sau 0.5 giây
+            }, 500); // 0.5 giây
+        } else {
+            // Nếu gặp lỗi khi gửi dữ liệu
+            console.error('Error!', response);
+            alert('OPPS! Đã xảy ra lỗi');
+        }
+    })
+    .catch(error => {
+        // Xử lý lỗi nếu có
+        console.error('Error!', error.message);
+        alert('OPPS! Đã xảy ra lỗi: ' + error.message);
+    });
+});
+
     </script>
 
     <script src="./thiep/tony_nga.js"></script>
