@@ -551,7 +551,16 @@ p{
                  1px  1px 0 #fff; /* Màu viền chữ */
 }
 
-
+#alcohol-option{
+  font-family: 'SVN-Gotham';
+}
+.til-hidden{
+  font-family: 15px;
+  font-weight: 400;
+}
+#alcohol-box{
+  margin-top: 10px;
+}
 
 @media (max-width: 480px){
   .container {
