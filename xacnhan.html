@@ -42,7 +42,7 @@
                         <label for="ten">
                           <span class="check-ten">Số khách tham dự</span>
                       </label>
-                        <select class="count-per" id="select" name="SỐ KHÁCH">
+                        <select class="count-per" name="SỐ KHÁCH">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -112,30 +112,33 @@
        const guestSelect = guestCount.querySelector('select');
 
        yesRadio.addEventListener('change', () => {
-           if (yesRadio.checked) {
-               allergyOption.classList.remove('hidden');
-               contactInfo.classList.remove('hidden');
-               guestCount.classList.remove('hidden');
-               alcoholOption.classList.remove('hidden'); // Hiển thị tùy chọn uống rượu
-               alcoholBox.classList.remove('hidden');
-               giftOption.classList.add('hidden');
-               contactInput.setAttribute('required', 'true');
-               guestSelect.setAttribute('required', 'true');
-           }
-       });
+            if (yesRadio.checked) {
+                allergyOption.classList.remove('hidden');
+                contactInfo.classList.remove('hidden');
+                guestCount.classList.remove('hidden');
+                alcoholOption.classList.remove('hidden'); // Hiển thị tùy chọn uống rượu
+                alcoholBox.classList.remove('hidden');
+                giftOption.classList.add('hidden');
+                contactInput.setAttribute('required', 'true');
+                guestSelect.setAttribute('required', 'true');
+                guestSelect.setAttribute('name', 'SỐ KHÁCH'); // Đảm bảo trường có thuộc tính name khi hiển thị
+            }
+        });
 
-       noRadio.addEventListener('change', () => {
-           if (noRadio.checked) {
-               allergyOption.classList.add('hidden');
-               contactInfo.classList.add('hidden');
-               guestCount.classList.add('hidden');
-               alcoholOption.classList.add('hidden'); // Ẩn tùy chọn uống rượu
-               alcoholBox.classList.add('hidden'); 
-               giftOption.classList.remove('hidden');
-               contactInput.removeAttribute('required');
-               guestSelect.removeAttribute('required');
-           }
-       });
+        noRadio.addEventListener('change', () => {
+            if (noRadio.checked) {
+                allergyOption.classList.add('hidden');
+                contactInfo.classList.add('hidden');
+                guestCount.classList.add('hidden');
+                alcoholOption.classList.add('hidden'); // Ẩn tùy chọn uống rượu
+                alcoholBox.classList.add('hidden');
+                giftOption.classList.remove('hidden');
+                contactInput.removeAttribute('required');
+                guestSelect.removeAttribute('required');
+                guestSelect.removeAttribute('name'); // Loại bỏ thuộc tính name để không gửi dữ liệu khi ẩn
+                guestSelect.value = ''; // Bỏ giá trị của trường khi bị ẩn
+            }
+        });
 
        form.addEventListener('submit', e => {
            e.preventDefault();
