@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./thiep/xacnhan.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <title>Xác nhận tham dự</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container-wrapper">
+            <div class="box-form">
+                <img src="./thiep/anh/thamdu-05.png" alt="" class="img-form">
+                <form action="" name="hien-quynh-vie">
+                    <div class="feed-info">
+                        <label for="" class="in-fe">DÀNH CHÚT THỜI GIAN ĐỂ XÁC NHẬN THAM DỰ GIÚP <strong>HIỀN VÀ QUỲNH</strong> NHÉ! </label>
+                    </div>
+        
+                    <div class="container-check">
+                        <input class="box-feed" type="radio" value="CÓ" id="yes" name="XÁC NHẬN">
+                        <label class="check-box" for="yes">
+                            <h3 class="til-check">CÓ</h3>
+                        </label>
+                        <input class="box-feed" type="radio" value="KHÔNG" id="no" name="XÁC NHẬN">
+                        <label class="check-box" for="no"> 
+                            <h3 class="til-check">KHÔNG</h3>
+                        </label>
+                    </div>
+                    <div class="box-ten">
+                        <input required class="inp-ten" type="text" name="TÊN" placeholder="Tên của bạn">
+                    </div>
+                    <div class="box-ten hidden" id="contact-info">
+                        <input required class="inp-ten" type="text" name="SĐT" placeholder="Số điện thoại" pattern="\d*" maxlength="10" inputmode="numeric" title="Chỉ được nhập số">
+                    </div>
+                    <div class="box-count hidden" id="guest-count">
+                        <label for="ten">
+                          <span class="check-ten">Số khách tham dự</span>
+                      </label>
+                        <select class="count-per" name="SỐ KHÁCH">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    
+                    <div class="box-hidden">
+            
+                        <div id="alcohol-option" class="hidden">
+                            <label class="til-hidden" for="alcohol">Bạn có uống rượu không?</label>
+                            <div id="alcohol-box" class="hidden">
+                                <input class="box-feed" type="radio" value="CÓ" id="ruou" name="UỐNG RƯỢU">
+                                <label class="check-box" for="ruou">
+                                    <h3 class="til-check">CÓ</h3>
+                                </label>
+                                <input class="box-feed" type="radio" value="KHÔNG" id="kruou" name="UỐNG RƯỢU">
+                                <label class="check-box" for="kruou"> 
+                                    <h3 class="til-check">KHÔNG</h3>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="allergy-option" class="hidden">
+                            <label class="til-hidden" for="allergy">Bạn có bị dị ứng gì không?</label>
+                            <input class="inp-ten" type="text" id="allergy" name="DỊ ỨNG" placeholder="Nếu có vui lòng ghi rõ thành phần">
+                        </div>
+                        
+                        <div id="gift-option" class="hidden">
+                            <!-- <label class="til-hidden" for="gift">NẾU BẠN KHÔNG ĐẾN ĐƯỢC CÓ THỂ MỪNG CƯỚI TẠI ĐÂY</label>
+                             <img src="./thiep/anh/QR_code_for_mobile_English_Wikipedia.svg" alt="" width="30%"> -->
+                        </div>
+                    </div>
+                    <div class="box-ten">
+                        <textarea name="LỜI CHÚC" id="loichuc" placeholder="Gửi lời chúc đến chúng mình" rows="5" cols="40"></textarea>
+                    </div>
+                    <div class="wrapper">
+                        <button class="xacnhan" type="submit">XÁC NHẬN</button>
+                    </div>
+                    <!-- <div class="mungcuoi">
+                        <div class="top">
+                            <label for="" class="top1">EARLY WEDDING CELEBRATION</label>
+                            <label for="" class="top2">TO THE GROOM HARRY PHAN & THE BRIDE VERONICA TRINH</label>
+                        </div>
+                        <div class="box-qr">
+                            <img src="./thiep/anh/QR.png" alt="" class="qr">
+                            
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       const scriptURL = 'https://script.google.com/macros/s/AKfycbxMdVD58rputRt6_--aaTEITfsgrOB34zniec5yDHCvgL4nkjADSYqYIwJSCyurBNtF/exec';
+       const form = document.forms['hien-quynh-vie'];
+       const yesRadio = document.getElementById('yes');
+       const noRadio = document.getElementById('no');
+       const allergyOption = document.getElementById('allergy-option');
+       const giftOption = document.getElementById('gift-option');
+       const contactInfo = document.getElementById('contact-info');
+       const guestCount = document.getElementById('guest-count');
+       const alcoholOption = document.getElementById('alcohol-option');
+       const alcoholBox = document.getElementById('alcohol-box');
+       const contactInput = contactInfo.querySelector('input');
+       const guestSelect = guestCount.querySelector('select');
+
+       yesRadio.addEventListener('change', () => {
+           if (yesRadio.checked) {
+               allergyOption.classList.remove('hidden');
+               contactInfo.classList.remove('hidden');
+               guestCount.classList.remove('hidden');
+               alcoholOption.classList.remove('hidden'); // Hiển thị tùy chọn uống rượu
+               alcoholBox.classList.remove('hidden');
+               giftOption.classList.add('hidden');
+               contactInput.setAttribute('required', 'true');
+               guestSelect.setAttribute('required', 'true');
+           }
+       });
+
+       noRadio.addEventListener('change', () => {
+           if (noRadio.checked) {
+               allergyOption.classList.add('hidden');
+               contactInfo.classList.add('hidden');
+               guestCount.classList.add('hidden');
+               alcoholOption.classList.add('hidden'); // Ẩn tùy chọn uống rượu
+               alcoholBox.classList.add('hidden'); 
+               giftOption.classList.remove('hidden');
+               contactInput.removeAttribute('required');
+               guestSelect.removeAttribute('required');
+           }
+       });
+
+       form.addEventListener('submit', e => {
+           e.preventDefault();
+           
+           // Kiểm tra sự tồn tại của tất cả các trường bắt buộc
+           const requiredFields = form.querySelectorAll('[required]');
+           let valid = true;
+           
+           requiredFields.forEach(field => {
+               if (!field.value.trim()) {
+                   valid = false;
+                   field.classList.add('error'); // Thêm lớp CSS để hiển thị lỗi (nếu có)
+               } else {
+                   field.classList.remove('error');
+               }
+           });
+           
+           if (!valid) {
+               alert('Vui lòng điền đầy đủ thông tin bắt buộc.');
+               return;
+           }
+
+           alert('CẢM ƠN BẠN ĐÃ PHẢN HỒI! Dữ liệu gửi về sẽ mất khoảng một vài giây, nhấn "OK" và đợi trang tự tải lại nhé <3'); // Hiển thị thông báo ngay lập tức khi nhấn submit
+
+           // Gửi dữ liệu form đi
+           fetch(scriptURL, { 
+               method: 'POST', 
+               body: new FormData(form)
+           })
+           .then(response => {
+               if (response.ok) {
+                   // Nếu dữ liệu được gửi thành công, tải lại trang
+                   setTimeout(() => {
+                       window.location.reload(); // Tải lại trang sau 0.5 giây
+                   }, 500); // 0.5 giây
+               } else {
+                   // Nếu gặp lỗi khi gửi dữ liệu
+                   console.error('Error!', response);
+                   alert('OPPS! Đã xảy ra lỗi');
+               }
+           })
+           .catch(error => {
+               // Xử lý lỗi nếu có
+               console.error('Error!', error.message);
+               alert('OPPS! Đã xảy ra lỗi: ' + error.message);
+           });
+       });
+    </script>
+
+    <script src="./thiep/tony_nga.js"></script>
+</body>
+</html>
